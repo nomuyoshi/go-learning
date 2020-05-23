@@ -1,0 +1,8 @@
+var hoge
+var fuga
+## 見出し
+text1
+var hoge
+var fuga
+## 見出し
+text2

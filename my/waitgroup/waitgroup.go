@@ -2,17 +2,12 @@ package main
 
 import (
 	"fmt"
-	"sync"
 	"time"
 )
 
-var wg sync.WaitGroup
-
 func main() {
 	queue := make(chan string)
-	// 3つのゴルーチンを生成
 	for i := 0; i < 3; i++ {
-		wg.Add(1) // ゴルーチン生成前にAddでインクリメントする
 		go fetch(queue)
 	}
 
@@ -24,7 +19,6 @@ func main() {
 	queue <- "http://example6.com"
 
 	close(queue)
-	wg.Wait()
 	fmt.Println("All goroutines finished.")
 }
 
@@ -33,7 +27,5 @@ func fetch(queue <-chan string) {
 		time.Sleep(10 * time.Second)
 		fmt.Printf("%s finished!!\n", url)
 	}
-	// 処理が完了したらDoneでデクリメントする
-	wg.Done()
 	return
 }
