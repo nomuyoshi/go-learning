@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// ダメな例
 func main() {
 	doWork := func(strings <-chan string) <-chan interface{} {
 		completed := make(chan interface{})
@@ -20,6 +21,7 @@ func main() {
 	// メインゴルーチンが生きている限り、doWork内で生成されたゴルーチンはメモリ内に残り続ける。
 	// 今回のサンプルではメインゴルーチンはすぐに終了するが、実際のアプリケーションだと長期間稼働して
 	// その間ゴルーチンを生成し続けるとじわじわメモリ使用率を高めていくことになってしまう。
+	// 正しくゴルーチンを終了させる例は　donechannel/main.go に記載している。
 	doWork(nil)
 	fmt.Println("Done.")
 }
