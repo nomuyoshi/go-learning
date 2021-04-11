@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// 値を受信する処理をdoneチャネルを使ってキャンセルする例
 func main() {
 	// doneチャネルは処理終了を伝えるためのチャネル。（＝キャンセルを伝える）
 	doWork := func(
@@ -32,6 +33,10 @@ func main() {
 
 	done := make(chan interface{})
 	terminated := doWork(done, nil)
+
+	// doWorkをキャンセルするゴルーチン
+	// ちなみに、このゴルーチンを <-terminatedの後に生成するとプログラムはDeadlockしてしまう。
+	// → terminatedに値が送られる、閉じられることがないから。
 	go func() {
 		// 1秒待って、doneチャネルを閉じる
 		// doneチャネルを閉じることで、doWorkに処理の終了（キャンセル）を伝える
