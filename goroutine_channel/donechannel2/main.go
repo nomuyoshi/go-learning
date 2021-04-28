@@ -13,6 +13,7 @@ func main() {
 		go func() {
 			defer fmt.Println("newRandStream 終了")
 			defer close(randStream)
+			// doneチャネルが閉じられるまで、チャネルに値を送信し続ける
 			for {
 				select {
 				case randStream <- rand.Int():
@@ -27,7 +28,7 @@ func main() {
 
 	done := make(chan interface{})
 	randStream := newRandStream(done)
-	fmt.Println("3 random ints:")
+	// newRandStream がチャネルに送信した値を3つ取り出したあとにdoneチャネルを閉じる
 	for i := 1; i <= 3; i++ {
 		fmt.Printf("%d: %d\n", i, <-randStream)
 	}
