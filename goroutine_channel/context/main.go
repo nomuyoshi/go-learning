@@ -7,6 +7,14 @@ import (
 	"time"
 )
 
+// main
+//   ├ printGreeting
+//   |   └ genGreeting
+//   |       └ locale
+//   └ printFarewell
+//       └ genFarewell
+//           └ locale
+
 func main() {
 	var wg sync.WaitGroup
 	// context.Background() は空のContextを生成する
